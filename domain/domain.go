@@ -1,28 +1,32 @@
 package domain
 
 import (
+	"context"
 	"time"
 )
 
 type IParkingLotApplication interface {
-	CheckIn() error
-	CheckOut() error
+	CheckIn(context.Context) (ParkingTicket, error)
+	RequestPayment(context.Context) (Payment, error)
+	CheckOut(context.Context, string) error
 }
 
 // Service
 type IParkingSpotManager interface {
-	AssignParkingSpot() error
-	ReleaseParkingSpot() error
+	AssignParkingSpot(context.Context) (ParkingSpot, error)
+	ReleaseParkingSpot(context.Context, ParkingSpot) error
 }
 
 type ITicketManager interface {
-	IssueTicket() error
-	CloseTicket() error
+	IssueTicket(context.Context, ParkingSpot) (ParkingTicket, error)
+	CloseTicket(context.Context, ParkingTicket) error
+	GetTicketByID(context.Context, string) (ParkingTicket, error)
 }
 
 type IPaymentManager interface {
-	CalculateFee() error
-	ReceivePayment() error
+	CalculateFee(context.Context, ParkingTicket) (Payment, error)
+	GetPaymentByID(context.Context, string) (Payment, error)
+	ReceivePayment(context.Context, Payment) error
 }
 
 // Entities
