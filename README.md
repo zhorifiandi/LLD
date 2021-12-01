@@ -29,4 +29,4 @@ Parking Lot Low Level Design
 
 ## System Flow
 ### User Journey
-[User Journey System Flow](./diagrams/user-journey-system-flow.png)
+[User Journey System Flow](./diagrams/user-journey-system-flow.png?raw=true)
