@@ -5,62 +5,61 @@ import (
 )
 
 type IParkingLotApplication interface {
-	func CheckIn() error;
-	func CheckOut() error;
+	CheckIn() error
+	CheckOut() error
 }
 
 // Service
 type IParkingSpotManager interface {
-	func AssignParkingSpot() error;
-	func ReleaseParkingSpot() error;
+	AssignParkingSpot() error
+	ReleaseParkingSpot() error
 }
 
 type ITicketManager interface {
-	func IssueTicket() error;
-	func CloseTicket() error;
+	IssueTicket() error
+	CloseTicket() error
 }
 
 type IPaymentManager interface {
-	func CalculateFee() error;
-	func ReceivePayment() error;
+	CalculateFee() error
+	ReceivePayment() error
 }
 
 // Entities
 type ParkingTicket struct {
-	ID string;
-	CheckinTimestamp time.Time;
-	CheckoutTimestamp time.Time;
-	Entrance ParkingEntrance;
-	Exit ParkingExit;
-	AssignedParkingSpot ParkingSpot;
+	ID                  string
+	CheckinTimestamp    time.Time
+	CheckoutTimestamp   time.Time
+	Entrance            ParkingEntrance
+	Exit                ParkingExit
+	AssignedParkingSpot ParkingSpot
 }
 
 type ParkingEntrance struct {
-	ID string
+	ID       string
 	Location Location
 }
 
 type ParkingExit struct {
-	ID string
+	ID       string
 	Location Location
 }
 
 type ParkingSpot struct {
-	ID string
-	Location Location
+	ID          string
+	Location    Location
 	VehicleType string
 }
 
 type Payment struct {
-	ID string
+	ID     string
 	Ticket ParkingTicket
-	Fee float32;
+	Fee    float32
 }
-
 
 // Value Object
 type Location struct {
-	Floor int;
-	Lattitude int;
-	Longitude int;
+	Floor     int
+	Lattitude int
+	Longitude int
 }
