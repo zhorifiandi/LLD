@@ -24,6 +24,7 @@ type IParkingLotApplication interface {
 
 	// Requirement 4
 	SetParkingFeePerHour(fee int)
+	// Modification of ReleaseCustomer
 	HandleCustomerExit(vehicleID string) domain.ParkingFee
 }
 
