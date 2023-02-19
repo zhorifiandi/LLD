@@ -5,9 +5,9 @@ import (
 	"log"
 	"time"
 
+	"github.com/zhorifiandi/parking-lot-lld/builder"
 	"github.com/zhorifiandi/parking-lot-lld/domain"
 	"github.com/zhorifiandi/parking-lot-lld/usecase/mvp"
-	"github.com/zhorifiandi/parking-lot-lld/usecase/sold"
 )
 
 type IParkingLotApplication interface {
@@ -121,13 +121,16 @@ func main() {
 	// Floor 1: 3 slots
 	// Floor 2: 4 slots
 	// Floor 3: 5 slots
+	// They want to initialize the app with input of list of integer
+	// Where the index represents the floorLevel, and the value represents the slot nums
 	fmt.Println(">>>>>>>>>>>>>")
 	fmt.Println("Requirement 5")
 	fmt.Println(">>>>>>>>>>>>>")
 
-	// Clue: Proxy Design Pattern
-	soldApp := sold.NewApplication([]int{
+	// Clue: Builder Design Pattern
+	// https://refactoring.guru/design-patterns/builder
+	soldApp := builder.NewApplication([]int{
 		5, 6, 7, 8, 5,
 	})
-	soldApp.BaseApplication.PrintAssignment()
+	soldApp.PrintAssignment()
 }

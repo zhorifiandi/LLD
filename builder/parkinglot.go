@@ -1,20 +1,14 @@
-package sold
+package builder
 
 import (
 	"github.com/zhorifiandi/parking-lot-lld/usecase/mvp"
 )
 
-type Application struct {
-	BaseApplication mvp.Application
-}
-
-func NewApplication(slots []int) *Application {
+func NewApplication(slots []int) *mvp.Application {
 	baseApp := mvp.NewApplication(mvp.ApplicationInputs{})
 	for _, slot := range slots {
 		baseApp.AddFloor(slot)
 	}
 
-	return &Application{
-		BaseApplication: *baseApp,
-	}
+	return baseApp
 }
