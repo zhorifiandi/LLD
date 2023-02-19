@@ -2,6 +2,8 @@ package mvp
 
 import (
 	"fmt"
+	"log"
+	"time"
 
 	"github.com/zhorifiandi/parking-lot-lld/domain"
 )
@@ -14,7 +16,8 @@ type ApplicationInputs struct {
 type AssignmentType = [][]domain.Slot
 
 type Application struct {
-	Assignment AssignmentType
+	Assignment        AssignmentType
+	ParkingFeePerHour int
 }
 
 func NewApplication(inputs ApplicationInputs) *Application {
@@ -36,9 +39,10 @@ func (p *Application) AcceptCustomer(vehicleID string) domain.Slot {
 		for j, slot := range floor {
 			if slot.VehicleID == "" {
 				newSlot := domain.Slot{
-					VehicleID: vehicleID,
-					FloorID:   i,
-					SlotID:    j,
+					VehicleID:   vehicleID,
+					FloorID:     i,
+					SlotID:      j,
+					CheckInTime: time.Now(),
 				}
 				p.Assignment[i][j] = newSlot
 				return newSlot
@@ -64,6 +68,7 @@ func (p *Application) ReleaseCustomer(vehicleID string) (slot domain.Slot) {
 }
 
 func (p *Application) PrintAssignment() {
+	fmt.Println()
 	fmt.Println("Current Assignment:")
 	for i, floor := range p.Assignment {
 		fmt.Printf("Floor Level %+v: ", i)
@@ -93,4 +98,24 @@ func (p *Application) AddFloor(slotNums int) {
 	for i := 0; i < slotNums; i++ {
 		p.Assignment[lastFloorID] = append(p.Assignment[lastFloorID], domain.Slot{})
 	}
+}
+
+// Requirement 4
+func (p *Application) SetParkingFeePerHour(fee int) {
+	p.ParkingFeePerHour = fee
+}
+
+func (p *Application) HandleCustomerExit(vehicleID string) (fee domain.ParkingFee) {
+	slot := p.ReleaseCustomer(vehicleID)
+	if slot.VehicleID != "" {
+		// Assumed
+		elapsedHour := int((time.Since(slot.CheckInTime)).Seconds())
+		log.Println("elapsedHour", elapsedHour)
+		fee = domain.ParkingFee{
+			TotalHour: elapsedHour,
+			TotalFee:  elapsedHour * p.ParkingFeePerHour,
+		}
+	}
+
+	return
 }

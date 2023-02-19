@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/zhorifiandi/parking-lot-lld/domain"
 	"github.com/zhorifiandi/parking-lot-lld/usecase/mvp"
@@ -11,14 +12,18 @@ import (
 type IParkingLotApplication interface {
 	// Customer side
 	PrintAssignment()
-	AcceptCustomer(string) domain.Slot
-	ReleaseCustomer(string) domain.Slot
+	AcceptCustomer(vehicleID string) domain.Slot
+	ReleaseCustomer(vehicleID string) domain.Slot
 
 	// Requirement 2
 	AddSlotsOnFloor(int, int)
 
 	// Requirement 3
 	AddFloor(slotNums int)
+
+	// Requirement 4
+	SetParkingFeePerHour(fee int)
+	HandleCustomerExit(vehicleID string) domain.ParkingFee
 }
 
 func main() {
@@ -35,6 +40,7 @@ func main() {
 	// The Parking Building has 2 Floors with 3 Vehicle slot for each flors
 	// They want to have a system to handle ticket entrance and ticket exit
 	// Customer will be assigned to a nearest available slot from the entrance gate
+	// Each customer will be identified by its Vehicle ID
 	// A slot become unavailable for customer if it's assigned
 	// A slot become available if previous customer has leave with their vehicle
 	// Admin must be able to see current slot assignment visually
@@ -65,6 +71,7 @@ func main() {
 	fmt.Println(">>>>>>>>>>>>>")
 	fmt.Println("Requirement 2")
 	fmt.Println(">>>>>>>>>>>>>")
+	time.Sleep(1 * time.Second)
 	floorLevel := 1
 	slotNums := 3
 	app.AddSlotsOnFloor(floorLevel, slotNums)
@@ -74,11 +81,12 @@ func main() {
 	app.PrintAssignment()
 
 	// Requirement 3:
-	// A company has done a quite renovattion on the building by adding 2 floors with 7 slots and 6 slots each
+	// A company has done a quite renovation on the building by adding 2 floors with 7 slots and 6 slots each
 	// They want to reflect this change on the systems
 	fmt.Println(">>>>>>>>>>>>>")
 	fmt.Println("Requirement 3")
 	fmt.Println(">>>>>>>>>>>>>")
+	time.Sleep(1 * time.Second)
 	slotNums = 7
 	app.AddFloor(slotNums)
 
@@ -87,4 +95,25 @@ func main() {
 
 	_ = app.AcceptCustomer("I1300")
 	app.PrintAssignment()
+
+	// Requirement #4:
+	// The company want to start automate the Parking Fee Calculation
+	// Parking Fee per hour is 2000
+	// At the time customer exit, systems needs to show
+	// - How many time has elapsed (1 sec ~= 1 hour)
+	// - Total Fee
+	time.Sleep(1 * time.Second)
+	app.SetParkingFeePerHour(2000)
+	fee := app.HandleCustomerExit("D1234")
+	fee.Print()
+
+	app.PrintAssignment()
+
+	// Requirement #5:
+	// The company decides to sell the software to other company (Company B)
+	// Company B building specs:
+	// Floor 0: 6 slots
+	// Floor 1: 3 slots
+	// Floor 2: 4 slots
+	// Floor 3: 5 slots
 }
