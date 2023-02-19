@@ -22,9 +22,9 @@ Parking Lot Low Level Design
 - They want to reflect this change on the systems
 
 ### Requirement 4
-The company want to start automate the Parking Fee Calculation
-Parking Fee per hour is 2000
-At the time customer exit, systems needs to show
+The company want to start automate the Parking Fee Calculation.
+Parking Fee per hour is 2000.
+At the time customer exit, systems needs to show:
 - How many time has elapsed (1 sec ~= 1 hour)
 - Total Fee
 
