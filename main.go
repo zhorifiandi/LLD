@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/zhorifiandi/parking-lot-lld/builder"
 	"github.com/zhorifiandi/parking-lot-lld/domain"
+	"github.com/zhorifiandi/parking-lot-lld/factory"
 	"github.com/zhorifiandi/parking-lot-lld/usecase/mvp"
 )
 
@@ -129,7 +129,7 @@ func main() {
 
 	// Clue: Factory Design Pattern
 	// https://refactoring.guru/design-patterns/factory-method
-	soldApp := builder.NewApplication([]int{
+	soldApp := factory.NewApplicationFromListOfSlots([]int{
 		5, 6, 7, 8, 5,
 	})
 	soldApp.PrintAssignment()
