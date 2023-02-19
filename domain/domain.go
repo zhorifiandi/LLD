@@ -5,11 +5,15 @@ import (
 	"time"
 )
 
-type Slot struct {
-	VehicleID   string
-	FloorID     int
-	SlotID      int
+type Ticket struct {
+	Slot        Slot
 	CheckInTime time.Time
+}
+
+type Slot struct {
+	VehicleID string
+	FloorID   int
+	SlotID    int
 }
 
 type ParkingFee struct {

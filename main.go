@@ -8,6 +8,7 @@ import (
 	"github.com/zhorifiandi/parking-lot-lld/domain"
 	"github.com/zhorifiandi/parking-lot-lld/factory"
 	"github.com/zhorifiandi/parking-lot-lld/usecase/mvp"
+	withfee "github.com/zhorifiandi/parking-lot-lld/usecase/with_fee"
 )
 
 type IParkingLotApplication interface {
@@ -23,17 +24,18 @@ type IParkingLotApplication interface {
 	AddFloor(slotNums int)
 
 	// Requirement 4
-	SetParkingFeePerHour(fee int)
+	// SetParkingFeePerHour(fee int)
 	// Modification of ReleaseCustomer
-	HandleCustomerExit(vehicleID string) domain.ParkingFee
+	// HandleCustomerExit(vehicleID string) domain.ParkingFee
 }
 
 func main() {
+	input := mvp.ApplicationInputs{
+		FloorNumbers:             2,
+		SlotsNumbersForEachFloor: 3,
+	}
 	var app IParkingLotApplication = mvp.NewApplication(
-		mvp.ApplicationInputs{
-			FloorNumbers:             2,
-			SlotsNumbersForEachFloor: 3,
-		},
+		input,
 	)
 	log.Printf("App is running..... \n")
 
@@ -108,11 +110,17 @@ func main() {
 	fmt.Println("Requirement 4")
 	fmt.Println(">>>>>>>>>>>>>")
 	time.Sleep(1 * time.Second)
-	app.SetParkingFeePerHour(2000)
-	fee := app.HandleCustomerExit("D1234")
+
+	newApp := withfee.NewApplication(input, 2000)
+	newApp.PrintAssignment()
+
+	// app.SetParkingFeePerHour(2000)
+	_ = newApp.AcceptCustomer("D1234")
+	time.Sleep(4 * time.Second)
+	fee := newApp.HandleCustomerExit("D1234")
 	fee.Print()
 
-	app.PrintAssignment()
+	newApp.PrintAssignment()
 
 	// Requirement #5:
 	// The company decides to sell the software to other company (Company B)

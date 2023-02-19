@@ -1,0 +1,16 @@
+/***
+
+Feedback
+
+Ade
+- Not necessary to ask vehicle type
+- Not necessary to define vehicle class -> no vehicle information we want to store
+- We should focus on the Parking Lot App
+- Advice: Prepare CLI before start, and choose your most comfortable language
+- Performance improvement shouldn't be main focus in LLD, brute force is still tolerable, except interviewer said it's important
+- Exit function must be friendly to user input: eg: vehicle ID. Vehicle object is not friendly
+
+Raudi
+- Good point on asking entrance gate and exit gate -> Determine 
+
+***/
