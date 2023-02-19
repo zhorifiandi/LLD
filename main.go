@@ -7,6 +7,7 @@ import (
 
 	"github.com/zhorifiandi/parking-lot-lld/domain"
 	"github.com/zhorifiandi/parking-lot-lld/usecase/mvp"
+	"github.com/zhorifiandi/parking-lot-lld/usecase/sold"
 )
 
 type IParkingLotApplication interface {
@@ -102,6 +103,9 @@ func main() {
 	// At the time customer exit, systems needs to show
 	// - How many time has elapsed (1 sec ~= 1 hour)
 	// - Total Fee
+	fmt.Println(">>>>>>>>>>>>>")
+	fmt.Println("Requirement 4")
+	fmt.Println(">>>>>>>>>>>>>")
 	time.Sleep(1 * time.Second)
 	app.SetParkingFeePerHour(2000)
 	fee := app.HandleCustomerExit("D1234")
@@ -116,4 +120,13 @@ func main() {
 	// Floor 1: 3 slots
 	// Floor 2: 4 slots
 	// Floor 3: 5 slots
+	fmt.Println(">>>>>>>>>>>>>")
+	fmt.Println("Requirement 5")
+	fmt.Println(">>>>>>>>>>>>>")
+
+	// Clue: Proxy Design Pattern
+	soldApp := sold.NewApplication([]int{
+		5, 6, 7, 8, 5,
+	})
+	soldApp.BaseApplication.PrintAssignment()
 }
