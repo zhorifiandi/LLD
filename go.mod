@@ -1,3 +1,3 @@
 module github.com/zhorifiandi/parking-lot-lld
 
-go 1.16
+go 1.17
