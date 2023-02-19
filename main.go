@@ -127,8 +127,8 @@ func main() {
 	fmt.Println("Requirement 5")
 	fmt.Println(">>>>>>>>>>>>>")
 
-	// Clue: Builder Design Pattern
-	// https://refactoring.guru/design-patterns/builder
+	// Clue: Factory Design Pattern
+	// https://refactoring.guru/design-patterns/factory-method
 	soldApp := builder.NewApplication([]int{
 		5, 6, 7, 8, 5,
 	})
