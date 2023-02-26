@@ -14,3 +14,8 @@
 - When creating an event, user has an option to specify the number of required representatives (lets call it N) from group (assume that the number of required representatives are same for all group in an event).
 - When a group is added, block the slot against the N available members of the group. If the N employees are not available for any group in the event, the event can't be created.
 - Suggest available slots for given list of groups for a given day (Optional)
+
+## Requirement 3
+
+- Update meeting time - if it is not possible return the status accordingly
+- Support recurring meeting (time, start_date, end_date, frequency) 
