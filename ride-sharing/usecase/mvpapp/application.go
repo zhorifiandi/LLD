@@ -2,11 +2,10 @@ package mvpapp
 
 import (
 	"fmt"
-	"strconv"
-	"time"
 
 	"log"
 
+	"github.com/google/uuid"
 	"github.com/zhorifiandi/LLD/ride-sharing/domain"
 )
 
@@ -27,7 +26,7 @@ type Application struct {
 }
 
 func (a *Application) AddDriver(name string) domain.Driver {
-	id := a.generateID()
+	id := a.GenerateID()
 	driver := domain.Driver{
 		ID:   id,
 		Name: name,
@@ -38,7 +37,7 @@ func (a *Application) AddDriver(name string) domain.Driver {
 }
 
 func (a *Application) AddRider(name string) domain.Rider {
-	id := a.generateID()
+	id := a.GenerateID()
 	rider := domain.Rider{
 		ID:   id,
 		Name: name,
@@ -48,8 +47,8 @@ func (a *Application) AddRider(name string) domain.Rider {
 	return rider
 }
 
-func (a *Application) generateID() string {
-	return strconv.FormatInt(time.Now().Unix(), 10)
+func (a *Application) GenerateID() string {
+	return (uuid.New()).String()
 }
 
 func (a *Application) DriverOffersRide(
@@ -64,7 +63,7 @@ func (a *Application) DriverOffersRide(
 		return
 	}
 
-	id := a.generateID()
+	id := a.GenerateID()
 
 	ride = domain.Ride{
 		ID:          id,
@@ -78,19 +77,28 @@ func (a *Application) DriverOffersRide(
 }
 
 func (a *Application) RiderRequestRide(
+	riderID string,
 	Origin int,
 	Destination int,
 	NumOfSeats int,
-) domain.Ride {
+) (ride domain.Ride) {
+	rider := a.Riders[riderID]
+	if rider.ID != riderID {
+		log.Println("Rider not found")
+		return
+	}
+
 	for id, ride := range a.AvailableRides {
 		isMatched := ride.Origin == Origin && ride.Destination == Destination && ride.NumOfSeats >= NumOfSeats
 		if isMatched && !ride.IsBooked {
 			ride.IsBooked = true
+			ride.RiderID = riderID
 			a.AvailableRides[id] = ride
 			return ride
 		}
 	}
 
+	log.Println("No available rides")
 	return domain.Ride{}
 }
 
@@ -106,7 +114,7 @@ func (a *Application) ShowAvailableRides() {
 	fmt.Printf("AvailableRides: %+v\n", a.AvailableRides)
 }
 
-func (a *Application) removeRide(rideID string) domain.Ride {
+func (a *Application) RemoveRide(rideID string) domain.Ride {
 	ride := a.AvailableRides[rideID]
 	fmt.Printf("%+v %+v\n", rideID, ride)
 	delete(a.AvailableRides, rideID)
@@ -114,11 +122,10 @@ func (a *Application) removeRide(rideID string) domain.Ride {
 }
 
 func (a *Application) DriverWithdrawRide(rideID string) {
-	a.removeRide(rideID)
+	a.RemoveRide(rideID)
 }
 
-func (a *Application) RiderCloseRide(rideID string) (totalFees float64) {
-	ride := a.removeRide(rideID)
+func (a *Application) CalculateRideFee(ride domain.Ride) (totalFees float64) {
 	constant := float64(0.75)
 	AMOUNT_CHARGED_PER_KM := float64(2000)
 	distance := float64(ride.Destination - ride.Origin)
@@ -128,4 +135,19 @@ func (a *Application) RiderCloseRide(rideID string) (totalFees float64) {
 	}
 
 	return distance * AMOUNT_CHARGED_PER_KM
+}
+
+func (a *Application) ReleaseRide(rideID string) domain.Ride {
+	ride := a.AvailableRides[rideID]
+	ride.IsBooked = false
+	tempRiderID := ride.RiderID
+	ride.RiderID = ""
+	a.AvailableRides[rideID] = ride
+	ride.RiderID = tempRiderID
+	return ride
+}
+
+func (a *Application) RiderCloseRide(rideID string) (totalFees float64) {
+	ride := a.ReleaseRide(rideID)
+	return a.CalculateRideFee(ride)
 }

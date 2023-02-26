@@ -19,3 +19,10 @@ type Ride struct {
 	NumOfSeats  int
 	IsBooked    bool
 }
+
+type Order struct {
+	ID        string
+	DriverID  string
+	RiderID   string
+	TotalFees float64
+}

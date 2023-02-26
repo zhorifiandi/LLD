@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/zhorifiandi/LLD/ride-sharing/domain"
-	"github.com/zhorifiandi/LLD/ride-sharing/mvpapp"
+	"github.com/zhorifiandi/LLD/ride-sharing/usecase/preferredriderapp"
 )
 
 type IApplication interface {
@@ -18,6 +18,7 @@ type IApplication interface {
 	DriverWithdrawRide(rideID string)
 
 	RiderRequestRide(
+		riderID string,
 		Origin int,
 		Destination int,
 		NumOfSeats int) domain.Ride
@@ -29,8 +30,8 @@ type IApplication interface {
 }
 
 func main() {
-	input := mvpapp.ApplicationInputs{}
-	var app IApplication = mvpapp.NewApplication(
+	input := preferredriderapp.ApplicationInputs{}
+	var app IApplication = preferredriderapp.NewApplication(
 		input,
 	)
 	log.Printf("App is running.....\n")
@@ -38,11 +39,22 @@ func main() {
 	driver1 := app.AddDriver("Asep")
 	app.ShowDrivers()
 
-	app.DriverOffersRide(
-		driver1.ID,
-		50, 60, 2,
-	)
-	app.ShowAvailableRides()
+	rider2 := app.AddRider("Arizho")
+	app.ShowRiders()
+
+	app.DriverOffersRide(driver1.ID, 50, 60, 2)
+	app.DriverOffersRide(driver1.ID, 50, 60, 2)
+	app.DriverOffersRide(driver1.ID, 50, 60, 2)
+	app.DriverOffersRide(driver1.ID, 50, 60, 2)
+	app.DriverOffersRide(driver1.ID, 50, 60, 2)
+	app.DriverOffersRide(driver1.ID, 50, 60, 2)
+	app.DriverOffersRide(driver1.ID, 50, 60, 2)
+	app.DriverOffersRide(driver1.ID, 50, 60, 2)
+	app.DriverOffersRide(driver1.ID, 50, 60, 2)
+	app.DriverOffersRide(driver1.ID, 50, 60, 2)
+	app.DriverOffersRide(driver1.ID, 50, 60, 2)
+	app.DriverOffersRide(driver1.ID, 50, 60, 2)
+	// app.ShowAvailableRides()
 
 	// error case
 	app.DriverOffersRide(
@@ -51,12 +63,29 @@ func main() {
 	)
 
 	ride1 := app.RiderRequestRide(
+		rider2.ID,
 		50, 60, 2,
 	)
-	app.ShowAvailableRides()
+	// app.ShowAvailableRides()
 
 	totalFees := app.RiderCloseRide(ride1.ID)
 	log.Printf("Ride ID: %+v, Total Fees: %+v\n", ride1.ID, totalFees)
-	app.ShowAvailableRides()
+	// app.ShowAvailableRides()
 
+	app.RiderRequestRide(rider2.ID, 50, 60, 2)
+	app.RiderRequestRide(rider2.ID, 50, 60, 2)
+	app.RiderRequestRide(rider2.ID, 50, 60, 2)
+	app.RiderRequestRide(rider2.ID, 50, 60, 2)
+	app.RiderRequestRide(rider2.ID, 50, 60, 2)
+	app.RiderRequestRide(rider2.ID, 50, 60, 2)
+	app.RiderRequestRide(rider2.ID, 50, 60, 2)
+	app.RiderRequestRide(rider2.ID, 50, 60, 2)
+	app.RiderRequestRide(rider2.ID, 50, 60, 2)
+	app.RiderRequestRide(rider2.ID, 50, 60, 2)
+	app.RiderRequestRide(rider2.ID, 50, 60, 2)
+	rideX := app.RiderRequestRide(rider2.ID, 50, 60, 2)
+	// app.ShowAvailableRides()
+
+	totalFees = app.RiderCloseRide(rideX.ID)
+	log.Printf("Ride ID: %+v, Total Fees: %+v\n", rideX.ID, totalFees)
 }
