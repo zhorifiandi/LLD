@@ -25,11 +25,11 @@ The program should take as input two or more drivers and a set of riders request
 
 A requesting for ride R1
 INPUT: A requests 50, 60, 1,
-CUTPUT: Ride Amount: 10 * 20 (Amount/Km) = 200
+CUTPUT: Ride Amount: 10 * 20 (Amount/KM) = 200
 
 A requesting for ride R1
 INPUT: A requests 50, 60, 2,
-OUTPUT: Ride Amount: 10 * 2 * 0.75 * 20 (Amount™m) = 300
+OUTPUT: Ride Amount: 10 * 2 * 0.75 * 20 (Amount/KM) = 300
 
 
 ## Functionalities expected:
