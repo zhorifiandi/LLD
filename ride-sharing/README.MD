@@ -70,8 +70,8 @@ Guidelines:
 3. The entire code should be your own.
 
 ## Bonus:
-Upgrade the rider to a preferred rider if he has done in more than 10 rides.
-Preferred Rider amount if No of seats == 2 © No of kilometers * Mo of seats * 0.5 * Amount
+- Upgrade the rider to a preferred rider if he has done in more than 10 rides.
+- Preferred Rider amount if No of seats == 2 => No of kilometers * Number of seats * 0.5 * Amount
 Charged per KM
-+ Preferred Ride amount if Mo of seats = 1 ©. No of kilometers * Amount Charged per KM * 0.75
+- Preferred Ride Total Fees if Number of seats == 1 => No of kilometers * Amount Charged per KM * 0.75
 
