@@ -13,17 +13,15 @@ seats
 
 3. Ride amount if No of seatz = 1: No of kilometers * Amount Charged per KM
 
-The program should take as input two or more drivers and a set of riders requesting rides. Multiple rides
+The program should take as input two or more drivers and a set of riders requesting rides. Multiple rides can happen simultaneously.
 
-can happen simultaneously.
-
-Assumptions :
+## Assumptions 
 
 1. Assume Amount charged per KM = 20
 2. No of Kilometers = desfination - origin
 3. All values are Integer
 
-Test Case:
+## Test Case:
 
 A requesting for ride R1
 INPUT: A requests 50, 60, 1,
@@ -33,28 +31,19 @@ A requesting for ride R1
 INPUT: A requests 50, 60, 2,
 OUTPUT: Ride Amount: 10 * 2 * 0.75 * 20 (Amount™m) = 300
 
-Bonus:
-Upgrade the rider to a preferred rider if he has done in more than 10 rides.
-Preferred Rider amount if No of seats == 2 © No of kilometers * Mo of seats * 0.5 * Amount
-Charged per KM
-+ Preferred Ride amount if Mo of seats = 1 ©. No of kilometers * Amount Charged per KM * 0.75
 
-Functionalities expected:
+## Functionalities expected:
 
-Add Driver{name)
-
-Add Rider{name)
-
-Create Ride (id, origin, destination, no of seats)
-Create/Update Ride (id, origin, destination, no of seats)
-Withdraw Ride (id)
-Close ride and return ride amount charged
+- Add Driver{name)
+- Add Rider{name)
+- Create Ride (id, origin, destination, no of seats)
+- Create/Update Ride (id, origin, destination, no of seats)
+- Withdraw Ride (id)
+- Close ride and return ride amount charged
 
 Expectations:
 
-1.
-
-Create the sample data yourself. You can put it info a file, test case or main driver program
+1. Create the sample data yourself. You can put it info a file, test case or main driver program
 itself.
 
 2. The code zhould be demo-able. Either by using the main driver program or test cases.
@@ -79,3 +68,10 @@ Guidelines:
 2. You are free to use the language and IDE of your choice.
 
 3. The entire code should be your own.
+
+## Bonus:
+Upgrade the rider to a preferred rider if he has done in more than 10 rides.
+Preferred Rider amount if No of seats == 2 © No of kilometers * Mo of seats * 0.5 * Amount
+Charged per KM
++ Preferred Ride amount if Mo of seats = 1 ©. No of kilometers * Amount Charged per KM * 0.75
+
