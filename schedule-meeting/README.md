@@ -18,4 +18,4 @@
 ## Requirement 3
 
 - Update meeting time - if it is not possible return the status accordingly
-- Support recurring meeting (time, start_date, end_date, frequency) 
+- Support recurring meeting (start_time, end_time, date, frequency (weekly, monthly, yearly))
