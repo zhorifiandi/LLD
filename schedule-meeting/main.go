@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"github.com/zhorifiandi/LLD/schedulemeeting/domain"
 	"github.com/zhorifiandi/LLD/schedulemeeting/usecase/groupmeeting"
@@ -61,10 +62,12 @@ func main() {
 	app.AddEmployeeToGroup(b.ID, d1.ID)
 	app.AddEmployeeToGroup(c.ID, d1.ID)
 
+	startTime := time.Now()
+	endTime := time.Now().Add(time.Duration(1) * time.Hour)
 	app.EmployeeCreateMeetingWithGroup(
 		a.ID,
-		0,
-		1,
+		startTime,
+		endTime,
 		[]string{a.ID},
 		[]domain.GroupInput{
 			{
@@ -74,5 +77,8 @@ func main() {
 		},
 	)
 
-	app.ShowGroupMeetings(0, 1)
+	app.ShowGroupMeetings(
+		startTime,
+		endTime,
+	)
 }

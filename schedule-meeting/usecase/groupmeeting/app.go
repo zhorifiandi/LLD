@@ -120,7 +120,7 @@ func (a *Application) ShowGroupMeetings(
 	EndTime domain.Time,
 ) (meetings []domain.GroupMeeting) {
 	for _, meeting := range a.GroupMeetings {
-		isWithinRange := meeting.StartTime >= StartTime && meeting.EndTime <= EndTime
+		isWithinRange := (meeting.StartTime.After(StartTime) || meeting.StartTime.Equal(StartTime)) && (meeting.EndTime.Before(EndTime) || meeting.EndTime.Equal(EndTime))
 		if isWithinRange {
 			meetings = append(meetings, meeting)
 		}

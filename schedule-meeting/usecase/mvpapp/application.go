@@ -55,7 +55,7 @@ func (a *Application) GetConflictedMeetings(
 	EndTime domain.Time,
 ) (meetings []domain.Meeting) {
 	for _, meeting := range a.Meetings {
-		isTimeOverlap := !(StartTime < meeting.StartTime || EndTime > meeting.EndTime)
+		isTimeOverlap := !(StartTime.Before(meeting.StartTime) || EndTime.After(meeting.EndTime))
 
 		isSameEmployee := false
 
@@ -141,7 +141,7 @@ func (a *Application) ShowMeetings(
 	EndTime domain.Time,
 ) (meetings []domain.Meeting) {
 	for _, meeting := range a.Meetings {
-		isWithinRange := meeting.StartTime >= StartTime && meeting.EndTime <= EndTime
+		isWithinRange := (meeting.StartTime.After(StartTime) || meeting.StartTime.Equal(StartTime)) && (meeting.EndTime.Before(EndTime) || meeting.EndTime.Equal(EndTime))
 		if isWithinRange {
 			meetings = append(meetings, meeting)
 		}

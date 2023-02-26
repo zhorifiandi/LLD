@@ -1,6 +1,8 @@
 package domain
 
-type Time = int
+import "time"
+
+type Time = time.Time
 
 type GroupInput struct {
 	ID        string
