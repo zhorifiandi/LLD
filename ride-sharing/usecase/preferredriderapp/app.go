@@ -16,13 +16,9 @@ type Application struct {
 type ApplicationInputs struct{}
 
 func NewApplication(inputs ApplicationInputs) (app *Application) {
-	baseApp := mvpapp.Application{
-		AvailableRides: map[string]domain.Ride{},
-		Drivers:        map[string]domain.Driver{},
-		Riders:         map[string]domain.Rider{},
-	}
+	baseApp := mvpapp.NewApplication(mvpapp.ApplicationInputs{})
 	return &Application{
-		BaseApp:      baseApp,
+		BaseApp:      *baseApp,
 		OrderHistory: []domain.Order{},
 	}
 }
